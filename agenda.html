@@ -88,9 +88,16 @@
       hora: document.getElementById("hora").value
     };
 
-    db.ref("agendamentos/" + usuario).set(dados)
-      .then(() => alert("Reunião agendada com sucesso!"))
-      .catch(error => alert("Erro ao agendar: " + error.message));
+    db.ref("inscricoes/" + usuario).get().then((snapshot) => {
+      if (!snapshot.exists()) {
+        alert("Usuário não está inscrito! Por favor, inscreva-se antes de agendar.");
+        return;
+      }
+
+      db.ref("agendamentos/" + usuario).set(dados)
+        .then(() => alert("Reunião agendada com sucesso!"))
+        .catch(error => alert("Erro ao agendar: " + error.message));
+    }).catch(error => alert("Erro ao verificar inscrição: " + error.message));
   }
 </script>
 </body>
