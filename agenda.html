@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendamento - ONG Vida Nova</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #111;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: #fff;
+      color: #000;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #000;
+      color: #fff;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>ONG Vida Nova</h1>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="programas.html">Programas</a>
+    <a href="inscricao.html">Inscrever-se</a>
+    <a href="agenda.html">Agenda</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>Agendar Reunião</h2>
+  <input type="text" id="nome" placeholder="Nome completo">
+  <input type="text" id="usuario" placeholder="Usuário (ID de inscrição)">
+  <input type="date" id="data">
+  <input type="time" id="hora">
+  <button onclick="agendar()">Agendar</button>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_DOMINIO.firebaseapp.com",
+    projectId: "SEU_PROJECT_ID",
+    storageBucket: "SEU_BUCKET.appspot.com",
+    messagingSenderId: "SEU_MESSAGING_ID",
+    appId: "SEU_APP_ID",
+    databaseURL: "https://SEU_DATABASE_URL"
+  };
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function agendar() {
+    const usuario = document.getElementById("usuario").value;
+    const dados = {
+      nome: document.getElementById("nome").value,
+      data: document.getElementById("data").value,
+      hora: document.getElementById("hora").value
+    };
+
+    db.ref("agendamentos/" + usuario).set(dados)
+      .then(() => alert("Reunião agendada com sucesso!"))
+      .catch(error => alert("Erro ao agendar: " + error.message));
+  }
+</script>
+</body>
+</html>
