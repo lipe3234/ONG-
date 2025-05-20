@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Programas - ONG Vida Nova</title>
   <style>
     body {
@@ -18,55 +17,61 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    header h1 {
-      font-size: 1.5rem;
     }
     nav a {
-      margin-left: 1rem;
       color: #fff;
       text-decoration: none;
+      margin-left: 1rem;
     }
     .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
       padding: 2rem;
       max-width: 900px;
-      margin: 0 auto;
+      margin: auto;
     }
-    .box {
+    .programa {
       background-color: #fff;
       color: #000;
-      border-radius: 20px;
       padding: 2rem;
-      margin-bottom: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-    .box h2 {
-      margin-bottom: 1rem;
+    .programa:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>ONG Vida Nova</h1>
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="programas.html">Programas</a>
-      <a href="inscricao.html">Inscrever-se</a>
-      <a href="agenda.html">Agenda</a>
-    </nav>
-  </header>
+<header>
+  <h1>ONG Vida Nova</h1>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="programas.html">Programas</a>
+    <a href="inscricao.html">Inscrever-se</a>
+    <a href="agenda.html">Agenda</a>
+  </nav>
+</header>
 
-  <div class="container">
-    <div class="box">
-      <h2>Bolsa Aluguel</h2>
-      <p>Programa de auxílio financeiro voltado para o pagamento parcial ou total do aluguel de famílias em situação de vulnerabilidade social.</p>
-    </div>
-    <div class="box">
-      <h2>Auxílio Cesta Básica - Viva Vida</h2>
-      <p>Fornecimento mensal de uma cesta básica com itens essenciais de alimentação e higiene para famílias cadastradas.</p>
-    </div>
+<div class="container">
+  <div class="programa" onclick="selecionarPrograma('Bolsa Aluguel')">
+    <h2>Bolsa Aluguel</h2>
+    <p>Auxílio financeiro para custeio de moradia.</p>
   </div>
+  <div class="programa" onclick="selecionarPrograma('Viva Vida')">
+    <h2>Viva Vida</h2>
+    <p>Auxílio com cestas básicas para famílias em vulnerabilidade.</p>
+  </div>
+</div>
+
+<script>
+  function selecionarPrograma(programa) {
+    localStorage.setItem("programaSelecionado", programa);
+    window.location.href = "inscricao.html";
+  }
+</script>
 </body>
 </html>
