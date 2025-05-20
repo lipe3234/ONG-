@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscrição - ONG Vida Nova</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+    header {
+      background-color: #111;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: white;
+      color: black;
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: black;
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>ONG Vida Nova</h1>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="programas.html">Programas</a>
+    <a href="inscricao.html">Inscrever-se</a>
+    <a href="agenda.html">Agenda</a>
+  </nav>
+</header>
+<div class="container">
+  <h2>Formulário de Inscrição</h2>
+  <input type="text" id="nome" placeholder="Nome completo">
+  <input type="text" id="cpf" placeholder="CPF">
+  <input type="text" id="cep" placeholder="CEP">
+  <input type="text" id="endereco" placeholder="Nº da casa / complemento">
+  <input type="date" id="nascimento">
+  <input type="text" id="celular" placeholder="Celular">
+  <input type="text" id="contato" placeholder="Nº para contato">
+  <input type="text" id="renda" placeholder="Renda (per capita)">
+  <select id="genero">
+    <option value="">Selecione o gênero</option>
+    <option value="masculino">Masculino</option>
+    <option value="feminino">Feminino</option>
+    <option value="outro">Outro</option>
+  </select>
+  <input type="text" id="usuario" placeholder="Usuário">
+  <input type="password" id="senha" placeholder="Senha">
+  <input type="password" id="confirmacao" placeholder="Confirmação da senha">
+  <button onclick="salvarInscricao()">Salvar</button>
+</div>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "SEU_DOMINIO.firebaseapp.com",
+    projectId: "SEU_PROJECT_ID",
+    storageBucket: "SEU_BUCKET.appspot.com",
+    messagingSenderId: "SEU_MESSAGING_ID",
+    appId: "SEU_APP_ID",
+    databaseURL: "https://SEU_DATABASE_URL"
+  };
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  function salvarInscricao() {
+    const usuario = document.getElementById("usuario").value;
+    const dados = {
+      nome: document.getElementById("nome").value,
+      cpf: document.getElementById("cpf").value,
+      cep: document.getElementById("cep").value,
+      endereco: document.getElementById("endereco").value,
+      nascimento: document.getElementById("nascimento").value,
+      celular: document.getElementById("celular").value,
+      contato: document.getElementById("contato").value,
+      renda: document.getElementById("renda").value,
+      genero: document.getElementById("genero").value,
+      usuario: usuario,
+      senha: document.getElementById("senha").value
+    };
+
+    db.ref("inscricoes/" + usuario).set(dados)
+      .then(() => alert("Inscrição salva com sucesso!"))
+      .catch(error => alert("Erro: " + error.message));
+  }
+</script>
+</body>
+</html>
